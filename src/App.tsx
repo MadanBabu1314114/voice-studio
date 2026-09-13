@@ -66,7 +66,7 @@ export default function App() {
         <div className="glass" style={{ maxWidth: 560, margin: '10vh auto' }}>
           <h1>Firebase not configured</h1>
           <p className="err">{firebaseConfigError}</p>
-          <p className="kbd">Docker: run <code>docker compose up --build</code> (defaults are now baked in). To override: set VITE_FIREBASE_* in .env or compose args and rebuild — Vite bakes env at build time, so a restart alone is not enough.</p>
+          <p className="kbd">Pages: this build baked empty env. Re-run the Actions deploy after adding Secrets (Settings → Secrets → Actions), or rebuild Docker with build-args. Vite bakes env at build time — a restart alone is not enough.</p>
         </div>
       </div>
     )

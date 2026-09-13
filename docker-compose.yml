@@ -3,13 +3,13 @@ services:
     build:
       context: .
       args:
-        VITE_FIREBASE_API_KEY: ${VITE_FIREBASE_API_KEY:-AIzaSyAl6BFTRgEeGk2vxodBpsgv6cXwbNnwHfE}
+        VITE_FIREBASE_API_KEY: ${VITE_FIREBASE_API_KEY}
         VITE_FIREBASE_AUTH_DOMAIN: ${VITE_FIREBASE_AUTH_DOMAIN:-ai-text-to-audio-ebe97.firebaseapp.com}
         VITE_FIREBASE_DATABASE_URL: ${VITE_FIREBASE_DATABASE_URL:-https://ai-text-to-audio-ebe97-default-rtdb.firebaseio.com}
         VITE_FIREBASE_PROJECT_ID: ${VITE_FIREBASE_PROJECT_ID:-ai-text-to-audio-ebe97}
         VITE_FIREBASE_STORAGE_BUCKET: ${VITE_FIREBASE_STORAGE_BUCKET:-ai-text-to-audio-ebe97.firebasestorage.app}
-        VITE_FIREBASE_MESSAGING_SENDER_ID: ${VITE_FIREBASE_MESSAGING_SENDER_ID:-155260131186}
-        VITE_FIREBASE_APP_ID: ${VITE_FIREBASE_APP_ID:-1:155260131186:web:c5b875a3ad22bdce79afeb}
+        VITE_FIREBASE_MESSAGING_SENDER_ID: ${VITE_FIREBASE_MESSAGING_SENDER_ID}
+        VITE_FIREBASE_APP_ID: ${VITE_FIREBASE_APP_ID}
     ports:
       - "8080:80"
     restart: unless-stopped

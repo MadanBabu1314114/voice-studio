@@ -32,14 +32,16 @@ docker run -p 8080:80 voice-studio
 # open http://localhost:8080
 
 # c) with Firebase env at build time (Vite bakes VITE_* at build):
+# Never paste real keys into git files — use env vars / Secrets:
+#   export VITE_FIREBASE_API_KEY=YOUR_KEY (or put in .env, never commit it)
 docker build -t voice-studio \
-  --build-arg VITE_FIREBASE_API_KEY=AIzaSyAl6BFTRgEeGk2vxodBpsgv6cXwbNnwHfE \
+  --build-arg VITE_FIREBASE_API_KEY="$VITE_FIREBASE_API_KEY" \
   --build-arg VITE_FIREBASE_AUTH_DOMAIN=ai-text-to-audio-ebe97.firebaseapp.com \
   --build-arg VITE_FIREBASE_DATABASE_URL=https://ai-text-to-audio-ebe97-default-rtdb.firebaseio.com \
   --build-arg VITE_FIREBASE_PROJECT_ID=ai-text-to-audio-ebe97 \
   --build-arg VITE_FIREBASE_STORAGE_BUCKET=ai-text-to-audio-ebe97.firebasestorage.app \
-  --build-arg VITE_FIREBASE_MESSAGING_SENDER_ID=155260131186 \
-  --build-arg VITE_FIREBASE_APP_ID=1:155260131186:web:c5b875a3ad22bdce79afeb .
+  --build-arg VITE_FIREBASE_MESSAGING_SENDER_ID="$VITE_FIREBASE_MESSAGING_SENDER_ID" \
+  --build-arg VITE_FIREBASE_APP_ID="$VITE_FIREBASE_APP_ID" .
 docker run -p 8080:80 voice-studio
 
 4) GITHUB PAGES AUTO-DEPLOY

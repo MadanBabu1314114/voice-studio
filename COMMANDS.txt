@@ -1,0 +1,60 @@
+VOICE STUDIO REACT — HOW TO RUN (npm + Docker)
+================================================
+
+1) PREREQUISITES
+- Node 20+, npm 10+
+- Docker + Docker Compose (for docker run)
+- Firebase project ai-text-to-audio-ebe97 (console: enable Auth > Email/Password, Realtime Database)
+- OpenRouter API key sk-or-... (paste in the app UI, never committed)
+- .env file (already created locally; on GitHub set same keys as Actions Secrets)
+
+2) RUN WITH NPM (local dev)
+cd voice-studio-react
+cp .env.example .env   # then fill VITE_FIREBASE_* values
+npm install
+npm run dev            # open http://localhost:5173
+# build check:
+npm run build
+npm run preview        # open http://localhost:4173
+
+3) RUN WITH DOCKER (recommended, single command)
+cd voice-studio-react
+# a) with docker compose (port 8080):
+# IMPORTANT: Vite bakes VITE_* at BUILD time. After pulling this fix you
+# MUST rebuild (not just restart), or you keep the old empty-config image:
+docker compose down
+docker compose up --build
+# open http://localhost:8080
+
+# b) with plain docker:
+docker build -t voice-studio .
+docker run -p 8080:80 voice-studio
+# open http://localhost:8080
+
+# c) with Firebase env at build time (Vite bakes VITE_* at build):
+docker build -t voice-studio \
+  --build-arg VITE_FIREBASE_API_KEY=AIzaSyAl6BFTRgEeGk2vxodBpsgv6cXwbNnwHfE \
+  --build-arg VITE_FIREBASE_AUTH_DOMAIN=ai-text-to-audio-ebe97.firebaseapp.com \
+  --build-arg VITE_FIREBASE_DATABASE_URL=https://ai-text-to-audio-ebe97-default-rtdb.firebaseio.com \
+  --build-arg VITE_FIREBASE_PROJECT_ID=ai-text-to-audio-ebe97 \
+  --build-arg VITE_FIREBASE_STORAGE_BUCKET=ai-text-to-audio-ebe97.firebasestorage.app \
+  --build-arg VITE_FIREBASE_MESSAGING_SENDER_ID=155260131186 \
+  --build-arg VITE_FIREBASE_APP_ID=1:155260131186:web:c5b875a3ad22bdce79afeb .
+docker run -p 8080:80 voice-studio
+
+4) GITHUB PAGES AUTO-DEPLOY
+- Push this folder as repo root to GitHub main branch
+- Settings > Pages > Source: GitHub Actions
+- Settings > Secrets > Actions: add VITE_FIREBASE_API_KEY, AUTH_DOMAIN, DATABASE_URL, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID, VITE_DEFAULT_VOICE_ID
+- Push to main -> workflow .github/workflows/deploy.yml builds + deploys
+
+5) FIREBASE RULES
+- Copy database.rules.json into Firebase Console > Realtime Database > Rules, Publish.
+- Only users/{uid} readable/writable by that user. Stores: profile, texts, voices, history (no audio blobs).
+
+6) USE THE APP
+- Signup (name/email/pass) -> Login -> Studio
+- Paste OpenRouter key once (browser localStorage only)
+- Add voice IDs, add texts (split bulk with --- line), Generate All (parallel 1-5), preview, download MP3 or Zip all
+- If 503 CLERK error: click Fish Direct per row
+- Toggle Light/Dark (top-right), Save theme to profile
